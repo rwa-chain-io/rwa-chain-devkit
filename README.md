@@ -1,3 +1,5 @@
+<img src="assets/rwa-chain-icon.svg" width="72" alt="RWA Chain">
+
 # RWA Chain developer kit
 
 Everything needed to deploy and verify contracts on RWA Chain, an OP Stack
@@ -33,7 +35,7 @@ deploys the same `Counter` contract and verifies it on Blockscout.
 ### Foundry ([`foundry/`](foundry))
 
 ```sh
-git clone --recurse-submodules <this repo> && cd rwa-chain-devkit/foundry
+git clone --recurse-submodules https://github.com/rwa-chain-io/rwa-chain-devkit && cd rwa-chain-devkit/foundry
 forge test
 forge script script/Deploy.s.sol --rpc-url rwa_testnet --private-key $PRIVATE_KEY --broadcast \
   --verify --verifier blockscout --verifier-url https://sepolia-explorer.rwa-chain.io/api/
