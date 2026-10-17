@@ -1,0 +1,97 @@
+{
+  "mainnet": {
+    "chainId": 7741,
+    "name": "RWA Chain",
+    "shortName": "rwachain",
+    "nativeCurrency": {
+      "name": "Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    },
+    "rpc": "https://rpc.rwa-chain.io",
+    "ws": "wss://ws.rwa-chain.io",
+    "explorer": "https://explorer.rwa-chain.io",
+    "verifierUrl": "https://explorer.rwa-chain.io/api/",
+    "faucet": null,
+    "bridge": "https://rwa-chain.io/explorer/bridge",
+    "evmVersion": "prague",
+    "l1": {
+      "chainId": 8453,
+      "name": "Base",
+      "rpc": "https://mainnet.base.org",
+      "explorer": "https://basescan.org",
+      "contracts": {
+        "OptimismPortal": "0x63832e6a88feb9fa0af1b9c67bbcef9fe6a41cae",
+        "L1StandardBridge": "0x1bf527a4298e51051fa1a8db7c18c32827fa50d2",
+        "L1CrossDomainMessenger": "0x62e4d8ef26f309cff505fd2b3505455f189f10c3",
+        "SystemConfig": "0xf0b4e82522953c44fd48c997c3e6fc6694dd35b8",
+        "DisputeGameFactory": "0x99d4d6b9fabc9c3a4c5e370263b49c9cf9eb6dff",
+        "AnchorStateRegistry": "0x0a3c25b134a8fd353c3e5ce4462141ffd2cae42c"
+      }
+    },
+    "contracts": {
+      "Multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
+      "Create2Deployer (Arachnid)": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+      "SafeSingletonFactory": "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7",
+      "Create2Deployer": "0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2",
+      "CreateX": "0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed",
+      "Permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "EntryPoint v0.7": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+      "EntryPoint v0.6": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+      "WETH9": "0x4200000000000000000000000000000000000006",
+      "Safe v1.3.0": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
+      "SafeL2 v1.3.0": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+      "MultiSend v1.3.0": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
+      "MultiSendCallOnly v1.3.0": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
+      "L2StandardBridge": "0x4200000000000000000000000000000000000010",
+      "L2ToL1MessagePasser": "0x4200000000000000000000000000000000000016"
+    }
+  },
+  "testnet": {
+    "chainId": 77410,
+    "name": "RWA Chain Sepolia",
+    "shortName": "rwachain-sepolia",
+    "nativeCurrency": {
+      "name": "Sepolia Ether",
+      "symbol": "ETH",
+      "decimals": 18
+    },
+    "rpc": "https://sepolia-rpc.rwa-chain.io",
+    "ws": "wss://sepolia-ws.rwa-chain.io",
+    "explorer": "https://sepolia-explorer.rwa-chain.io",
+    "verifierUrl": "https://sepolia-explorer.rwa-chain.io/api/",
+    "faucet": "https://testnet.rwa-chain.io/explorer/faucet",
+    "bridge": "https://testnet.rwa-chain.io/explorer/bridge",
+    "evmVersion": "prague",
+    "l1": {
+      "chainId": 84532,
+      "name": "Base Sepolia",
+      "rpc": "https://sepolia.base.org",
+      "explorer": "https://sepolia.basescan.org",
+      "contracts": {
+        "OptimismPortal": "0x4c7d4bf40d7f86bdfd4ef00065571dbc2349a448",
+        "L1StandardBridge": "0xb389ae59ad2dfd21781aa2cc8a456e029f78ab54",
+        "L1CrossDomainMessenger": "0xfcd8bebd0a4eba3e7365c79cf14683531e79788e",
+        "SystemConfig": "0xdf0f9ce51ecd49b9aca45f21d60ab48f934e62bb",
+        "DisputeGameFactory": "0x6feb86b00a9e8c550770ea663a67c40851e90448"
+      }
+    },
+    "contracts": {
+      "Multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
+      "Create2Deployer (Arachnid)": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+      "SafeSingletonFactory": "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7",
+      "Create2Deployer": "0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2",
+      "CreateX": "0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed",
+      "Permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "EntryPoint v0.7": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+      "EntryPoint v0.6": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+      "WETH9": "0x4200000000000000000000000000000000000006",
+      "Safe v1.3.0": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
+      "SafeL2 v1.3.0": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+      "MultiSend v1.3.0": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
+      "MultiSendCallOnly v1.3.0": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
+      "L2StandardBridge": "0x4200000000000000000000000000000000000010",
+      "L2ToL1MessagePasser": "0x4200000000000000000000000000000000000016"
+    }
+  }
+}

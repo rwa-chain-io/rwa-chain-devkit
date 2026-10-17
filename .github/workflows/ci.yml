@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Weekly: deploy and verify the sample contract on the testnet (77410) to
+  # prove the guides in this repo still work end to end. Mainnet never runs here.
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  foundry:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: foundry
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: forge fmt --check
+      - run: forge build
+      - run: forge test
+
+  hardhat:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hardhat
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx hardhat build
+
+  viem:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: viem
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run typecheck
+
+  networks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/check-networks.mjs
+
+  testnet-deploy:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: [foundry, hardhat, viem, networks]
+    runs-on: ubuntu-latest
+    env:
+      DEPLOYER_KEY: ${{ secrets.DEPLOYER_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: foundry-rs/foundry-toolchain@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check deployer balance
+        run: |
+          test -n "$DEPLOYER_KEY" || { echo "DEPLOYER_KEY secret is not set"; exit 1; }
+          addr=$(cast wallet address --private-key "$DEPLOYER_KEY")
+          bal=$(cast balance --ether "$addr" --rpc-url https://sepolia-rpc.rwa-chain.io)
+          echo "$addr has $bal ETH on 77410"
+          awk -v b="$bal" 'BEGIN { exit !(b >= 0.001) }' || { echo "fund $addr from https://testnet.rwa-chain.io/explorer/faucet"; exit 1; }
+
+      - name: Foundry deploy and verify
+        working-directory: foundry
+        run: |
+          forge script script/Deploy.s.sol --rpc-url rwa_testnet --private-key "$DEPLOYER_KEY" --broadcast \
+            --verify --verifier blockscout --verifier-url https://sepolia-explorer.rwa-chain.io/api/ \
+            --retries 10 --delay 10
+          echo "COUNTER=$(jq -r '.transactions[0].contractAddress' broadcast/Deploy.s.sol/77410/run-latest.json)" >> "$GITHUB_ENV"
+
+      - name: Hardhat deploy and verify
+        working-directory: hardhat
+        run: npm ci && npm run deploy:testnet
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_KEY }}
+
+      - name: viem write and read back
+        working-directory: viem
+        run: npm ci && npm run write && npm run read
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_KEY }}
+
+      - name: Check the Foundry deployment is verified on Blockscout
+        run: |
+          curl -fsS "https://sepolia-explorer.rwa-chain.io/api/v2/smart-contracts/$COUNTER" | jq -e '.is_verified == true'

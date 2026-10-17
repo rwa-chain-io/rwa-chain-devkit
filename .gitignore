@@ -1,0 +1,7 @@
+node_modules/
+.env
+foundry/out/
+foundry/cache/
+foundry/broadcast/
+hardhat/artifacts/
+hardhat/cache/

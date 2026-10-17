@@ -1,0 +1,16 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.28"
+# RWA Chain runs every OP Stack fork through Isthmus from genesis.
+evm_version = "prague"
+
+[rpc_endpoints]
+rwa = "https://rpc.rwa-chain.io"
+rwa_testnet = "https://sepolia-rpc.rwa-chain.io"
+
+# Blockscout needs no API key; forge still wants a non-empty one.
+[etherscan]
+rwa = { key = "blockscout", chain = 7741, url = "https://explorer.rwa-chain.io/api/" }
+rwa_testnet = { key = "blockscout", chain = 77410, url = "https://sepolia-explorer.rwa-chain.io/api/" }

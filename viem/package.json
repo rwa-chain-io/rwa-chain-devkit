@@ -1,0 +1,18 @@
+{
+  "name": "rwa-chain-devkit-viem",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "read": "tsx read.ts",
+    "write": "tsx write.ts"
+  },
+  "dependencies": {
+    "viem": "^2.57.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "^5.9.3",
+    "tsx": "^4.23.15"
+  }
+}
