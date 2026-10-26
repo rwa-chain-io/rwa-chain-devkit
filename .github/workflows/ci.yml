@@ -104,5 +104,11 @@ jobs:
           PRIVATE_KEY: ${{ secrets.DEPLOYER_KEY }}
 
       - name: Check the Foundry deployment is verified on Blockscout
+        # Blockscout finishes verification asynchronously; on 2026-10-26 it
+        # landed 0.5 s after a single check. Poll for up to 2 minutes.
         run: |
-          curl -fsS "https://sepolia-explorer.rwa-chain.io/api/v2/smart-contracts/$COUNTER" | jq -e '.is_verified == true'
+          for i in $(seq 1 24); do
+            curl -fsS "https://sepolia-explorer.rwa-chain.io/api/v2/smart-contracts/$COUNTER" | jq -e '.is_verified == true' && exit 0
+            sleep 5
+          done
+          exit 1
